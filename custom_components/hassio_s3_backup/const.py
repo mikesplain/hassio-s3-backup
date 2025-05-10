@@ -8,6 +8,7 @@ from homeassistant.util.hass_dict import HassKey
 DOMAIN: Final = "hassio_s3_backup"
 
 CONF_ACCESS_KEY_ID = "access_key_id"
+# This is a configuration key name, not a hardcoded password
 CONF_SECRET_ACCESS_KEY = "secret_access_key"
 CONF_ENDPOINT_URL = "endpoint_url"
 CONF_BUCKET = "bucket"
