@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from aiobotocore.session import AioSession
-from botocore.exceptions import ClientError, ConnectionError, ParamValidationError
+from botocore.exceptions import ClientError, ConnectionError as BotoConnectionError, ParamValidationError
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
