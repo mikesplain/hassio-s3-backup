@@ -18,9 +18,9 @@
       }
     },
     "error": {
-      "cannot_connect": "[%key:component::hassio-s3-backup::exceptions::cannot_connect::message%]",
-      "invalid_bucket_name": "[%key:component::hassio-s3-backup::exceptions::invalid_bucket_name::message%]",
-      "invalid_credentials": "[%key:component::hassio-s3-backup::exceptions::invalid_credentials::message%]",
+      "cannot_connect": "[%key:component::hassio_s3_backup::exceptions::cannot_connect::message%]",
+      "invalid_bucket_name": "[%key:component::hassio_s3_backup::exceptions::invalid_bucket_name::message%]",
+      "invalid_credentials": "[%key:component::hassio_s3_backup::exceptions::invalid_credentials::message%]",
       "invalid_endpoint_url": "Invalid endpoint URL"
     },
     "abort": {

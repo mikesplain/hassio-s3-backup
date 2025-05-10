@@ -1,5 +1,5 @@
 {
-  "domain": "hassio-s3-backup",
+  "domain": "hassio_s3_backup",
   "name": "Generic S3 Backup Component",
   "codeowners": ["@mikesplain"],
   "config_flow": true,

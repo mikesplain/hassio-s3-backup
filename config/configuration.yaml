@@ -9,4 +9,4 @@ homeassistant:
 logger:
   default: info
   logs:
-    custom_components.hassio-s3-backup: debug
+    custom_components.hassio_s3_backup: debug
