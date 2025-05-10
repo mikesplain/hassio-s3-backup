@@ -1,46 +1,86 @@
-# Notice
+# Home Assistant Generic S3 Backup
 
-The component and platforms in this repository are not meant to be used by a
-user, but as a "blueprint" that custom component developers can build
-upon, to make more awesome stuff.
+A Home Assistant custom integration that enables storing and managing Home Assistant backups on any S3-compatible object storage provider (e.g., Cloudflare R2, Wasabi, MinIO, DigitalOcean Spaces, and more). This is an alternative to the built-in AWS S3 integration, supporting a wider range of providers.
 
-HAVE FUN! 😎
+---
 
-## Why?
+## Features
 
-This is simple, by having custom_components look (README + structure) the same
-it is easier for developers to help each other and for users to start using them.
+- Upload Home Assistant backups to S3-compatible storage
+- Restore backups directly from your S3 bucket
+- Tested with Cloudflare R2 (other providers should work if S3 API compatible)
+- Easy configuration via the Home Assistant UI
 
-If you are a developer and you want to add things to this "blueprint" that you think more
-developers will have use for, please open a PR to add it :)
+---
 
-## What?
+## Installation
 
-This repository contains multiple files, here is a overview:
+### HACS (Recommended)
+1. In Home Assistant, go to **HACS > Integrations**.
+2. Click the three dots (⋮) in the top right and choose **Custom repositories**.
+3. Add this repository URL and select **Integration** as the category.
+4. Search for `Generic S3 Backup` in HACS and install.
+5. Restart Home Assistant.
 
-File | Purpose | Documentation
--- | -- | --
-`.devcontainer.json` | Used for development/testing with Visual Studio Code. | [Documentation](https://code.visualstudio.com/docs/remote/containers)
-`.github/ISSUE_TEMPLATE/*.yml` | Templates for the issue tracker | [Documentation](https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository)
-`custom_components/integration_blueprint/*` | Integration files, this is where everything happens. | [Documentation](https://developers.home-assistant.io/docs/creating_component_index)
-`CONTRIBUTING.md` | Guidelines on how to contribute. | [Documentation](https://help.github.com/en/github/building-a-strong-community/setting-guidelines-for-repository-contributors)
-`LICENSE` | The license file for the project. | [Documentation](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository)
-`README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions. | [Documentation](https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax)
-`requirements.txt` | Python packages used for development/lint/testing this integration. | [Documentation](https://pip.pypa.io/en/stable/user_guide/#requirements-files)
+### Manual
+1. Download this repository as a ZIP file and extract.
+2. Copy the `custom_components/hassio_s3_backup` folder into your Home Assistant `custom_components` directory.
+3. Restart Home Assistant.
 
-## How?
+---
 
-1. Create a new repository in GitHub, using this repository as a template by clicking the "Use this template" button in the GitHub UI.
-1. Open your new repository in Visual Studio Code devcontainer (Preferably with the "`Dev Containers: Clone Repository in Named Container Volume...`" option).
-1. Rename all instances of the `integration_blueprint` to `custom_components/<your_integration_domain>` (e.g. `custom_components/awesome_integration`).
-1. Rename all instances of the `Integration Blueprint` to `<Your Integration Name>` (e.g. `Awesome Integration`).
-1. Run the `scripts/develop` to start HA and test out your new integration.
+## Configuration
 
-## Next steps
+1. In Home Assistant, go to **Settings > Devices & Services > Integrations**.
+2. Click **Add Integration** and search for `Generic S3 Backup`.
+3. Enter the following details for your S3-compatible provider:
+   - **Access Key ID**: Your S3 API access key
+   - **Secret Access Key**: Your S3 API secret
+   - **Bucket Name**: The name of your bucket (must exist and be writable)
+   - **Endpoint URL**: The provider’s S3 endpoint (e.g., `https://<accountid>.r2.cloudflarestorage.com` for Cloudflare R2)
+4. Complete the setup. The integration will verify your credentials and bucket access.
 
-These are some next steps you may want to look into:
-- Add tests to your integration, [`pytest-homeassistant-custom-component`](https://github.com/MatthewFlamm/pytest-homeassistant-custom-component) can help you get started.
-- Add brand images (logo/icon) to https://github.com/home-assistant/brands.
-- Create your first release.
-- Share your integration on the [Home Assistant Forum](https://community.home-assistant.io/).
-- Submit your integration to [HACS](https://hacs.xyz/docs/publish/start).
+---
+
+## Usage
+
+- Backups created in Home Assistant will be uploaded to your S3 bucket automatically.
+- You can restore backups directly from the S3 bucket via the Home Assistant UI.
+- All backup management (list, download, delete) is available through the standard Home Assistant backup interface.
+
+---
+
+## Troubleshooting
+
+- **Cannot connect to endpoint**: Double-check your endpoint URL and network connectivity.
+- **Invalid credentials**: Ensure your access key and secret are correct and have permissions for the bucket.
+- **Invalid bucket name**: The bucket must already exist and be writable by the provided credentials.
+
+Check Home Assistant logs for detailed error messages.
+
+---
+
+## Supported Providers
+
+- Cloudflare R2 (tested)
+- Any provider supporting the S3 API (Wasabi, DigitalOcean Spaces, MinIO, etc.)
+
+If you successfully use another provider, please open an issue or PR to update this list!
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+## Credits
+
+Created by [mikesplain](https://github.com/mikesplain). Inspired by the Home Assistant integration blueprint and AWS S3 backup integration.
+
+---
+
+## Need Help?
+
+Open an issue on the [GitHub repository](https://github.com/mikesplain/hassio-s3-backup/issues) for support or feature requests.
