@@ -1,3 +1,8 @@
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-blue.svg)](https://github.com/hacs/integration)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mikesplain/hassio-s3-backup)
+![GitHub](https://img.shields.io/github/license/mikesplain/hassio-s3-backup)
+![Validate](https://github.com/mikesplain/hassio-s3-backup/actions/workflows/validate.yml/badge.svg)
+
 # Home Assistant Generic S3 Backup
 
 A Home Assistant custom integration that enables storing and managing Home Assistant backups on any S3-compatible object storage provider (e.g., Cloudflare R2, Wasabi, MinIO, DigitalOcean Spaces, and more). This is an alternative to the built-in AWS S3 integration, supporting a wider range of providers.
