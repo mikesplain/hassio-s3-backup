@@ -1,7 +1,7 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-blue.svg)](https://github.com/hacs/integration)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/mikesplain/hassio-s3-backup)
-![GitHub](https://img.shields.io/github/license/mikesplain/hassio-s3-backup)
-![Validate](https://github.com/mikesplain/hassio-s3-backup/actions/workflows/validate.yml/badge.svg)
+[![GitHub](https://img.shields.io/github/license/mikesplain/hassio-s3-backup)](LICENSE)
+[![Validate](https://github.com/mikesplain/hassio-s3-backup/actions/workflows/validate.yml/badge.svg)](https://github.com/mikesplain/hassio-s3-backup/actions/workflows/validate.yml)
 
 # Home Assistant Generic S3 Backup
 
