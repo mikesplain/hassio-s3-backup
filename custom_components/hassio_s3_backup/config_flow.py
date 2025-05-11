@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
-from aiobotocore.session import AioSession
-from botocore.exceptions import ClientError, ConnectionError as BotoConnectionError, ParamValidationError
 import voluptuous as vol
-
+from aiobotocore.session import AioSession
+from botocore.exceptions import (
+    ClientError,
+    ParamValidationError,
+)
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.selector import (
