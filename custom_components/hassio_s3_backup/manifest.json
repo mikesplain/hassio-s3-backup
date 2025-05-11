@@ -4,9 +4,9 @@
   "codeowners": ["@mikesplain"],
   "config_flow": true,
   "documentation": "https://github.com/mikesplain/aladdin-connect-temp",
-  "issue_tracker": "https://github.com/mikesplain/aladdin-connect-temp/issues",
   "integration_type": "service",
   "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/mikesplain/aladdin-connect-temp/issues",
   "loggers": ["aiobotocore"],
   "requirements": ["aiobotocore==2.21.1"],
   "version": "0.0.1"

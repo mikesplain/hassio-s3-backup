@@ -1,14 +1,13 @@
 """Backup platform for the S3 integration."""
 
-from collections.abc import AsyncIterator, Callable, Coroutine
 import functools
 import json
 import logging
+from collections.abc import AsyncIterator, Callable, Coroutine
 from time import time
 from typing import Any
 
 from botocore.exceptions import BotoCoreError
-
 from homeassistant.components.backup import (
     AgentBackup,
     BackupAgent,
@@ -29,7 +28,8 @@ CACHE_TTL = 300
 # We set the threshold to 20 MiB to avoid too many parts.
 # Note that each part is allocated in the memory.
 MULTIPART_MIN_PART_SIZE_BYTES = 20 * 2**20
-# Set chunk size to 100MB for consistent part sizes (required by some S3-compatible services)
+# Set chunk size to 100MB for consistent part sizes
+# (required by some S3-compatible services)
 MULTIPART_CHUNK_SIZE_BYTES = 104857600  # 100MB
 
 
@@ -63,9 +63,10 @@ def async_register_backup_agents_listener(
     hass: HomeAssistant,
     *,
     listener: Callable[[], None],
-    **kwargs: Any,
+    **_kwargs: Any,
 ) -> Callable[[], None]:
-    """Register a listener to be called when agents are added or removed.
+    """
+    Register a listener to be called when agents are added or removed.
 
     :return: A function to unregister the listener.
     """
@@ -92,7 +93,7 @@ class S3BackupAgent(BackupAgent):
 
     domain = DOMAIN
 
-    def __init__(self, hass: HomeAssistant, entry: S3ConfigEntry) -> None:
+    def __init__(self, _hass: HomeAssistant, entry: S3ConfigEntry) -> None:
         """Initialize the S3 agent."""
         super().__init__()
         self._client = entry.runtime_data
@@ -106,9 +107,10 @@ class S3BackupAgent(BackupAgent):
     async def async_download_backup(
         self,
         backup_id: str,
-        **kwargs: Any,
+        **_kwargs: Any,
     ) -> AsyncIterator[bytes]:
-        """Download a backup file.
+        """
+        Download a backup file.
 
         :param backup_id: The ID of the backup that was returned in async_list_backups.
         :return: An async iterator that yields bytes.
@@ -124,9 +126,10 @@ class S3BackupAgent(BackupAgent):
         *,
         open_stream: Callable[[], Coroutine[Any, Any, AsyncIterator[bytes]]],
         backup: AgentBackup,
-        **kwargs: Any,
+        **_kwargs: Any,
     ) -> None:
-        """Upload a backup.
+        """
+        Upload a backup.
 
         :param open_stream: A function returning an async iterator that yields bytes.
         :param backup: Metadata about the backup that should be uploaded.
@@ -147,7 +150,8 @@ class S3BackupAgent(BackupAgent):
                 Body=metadata_content,
             )
         except BotoCoreError as err:
-            raise BackupAgentError("Failed to upload backup") from err
+            msg = "Failed to upload backup"
+            raise BackupAgentError(msg) from err
         else:
             # Reset cache after successful upload
             self._cache_expiration = time()
@@ -157,7 +161,8 @@ class S3BackupAgent(BackupAgent):
         tar_filename: str,
         open_stream: Callable[[], Coroutine[Any, Any, AsyncIterator[bytes]]],
     ) -> None:
-        """Upload a small file using simple upload.
+        """
+        Upload a small file using simple upload.
 
         :param tar_filename: The target filename for the backup.
         :param open_stream: A function returning an async iterator that yields bytes.
@@ -178,8 +183,9 @@ class S3BackupAgent(BackupAgent):
         self,
         tar_filename: str,
         open_stream: Callable[[], Coroutine[Any, Any, AsyncIterator[bytes]]],
-    ):
-        """Upload a large file using multipart upload.
+    ) -> None:
+        """
+        Upload a large file using multipart upload.
 
         :param tar_filename: The target filename for the backup.
         :param open_stream: A function returning an async iterator that yields bytes.
@@ -228,7 +234,9 @@ class S3BackupAgent(BackupAgent):
             if buffer:
                 final_data = b"".join(buffer)
                 _LOGGER.debug(
-                    "Uploading final part number %d, size %d", part_number, len(final_data)
+                    "Uploading final part number %d, size %d",
+                    part_number,
+                    len(final_data),
                 )
                 part = await self._client.upload_part(
                     Bucket=self._bucket,
@@ -261,9 +269,10 @@ class S3BackupAgent(BackupAgent):
     async def async_delete_backup(
         self,
         backup_id: str,
-        **kwargs: Any,
+        **_kwargs: Any,
     ) -> None:
-        """Delete a backup file.
+        """
+        Delete a backup file.
 
         :param backup_id: The ID of the backup that was returned in async_list_backups.
         """
@@ -278,7 +287,7 @@ class S3BackupAgent(BackupAgent):
         self._cache_expiration = time()
 
     @handle_boto_errors
-    async def async_list_backups(self, **kwargs: Any) -> list[AgentBackup]:
+    async def async_list_backups(self, **_kwargs: Any) -> list[AgentBackup]:
         """List backups."""
         backups = await self._list_backups()
         return list(backups.values())
@@ -287,7 +296,7 @@ class S3BackupAgent(BackupAgent):
     async def async_get_backup(
         self,
         backup_id: str,
-        **kwargs: Any,
+        **_kwargs: Any,
     ) -> AgentBackup:
         """Return a backup."""
         return await self._find_backup_by_id(backup_id)
@@ -298,7 +307,8 @@ class S3BackupAgent(BackupAgent):
         if backup := backups.get(backup_id):
             return backup
 
-        raise BackupNotFound(f"Backup {backup_id} not found")
+        msg = f"Backup {backup_id} not found"
+        raise BackupNotFound(msg)
 
     async def _list_backups(self) -> dict[str, AgentBackup]:
         """List backups, using a cache if possible."""

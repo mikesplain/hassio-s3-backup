@@ -3,14 +3,18 @@
 from __future__ import annotations
 
 import logging
-from typing import cast
+from typing import TYPE_CHECKING, cast
 
 from aiobotocore.client import AioBaseClient as S3Client
 from aiobotocore.session import AioSession
-from botocore.exceptions import ClientError, ConnectionError, ParamValidationError
-
+from botocore.exceptions import (
+    ClientError,
+    ParamValidationError,
+)
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+
+if TYPE_CHECKING:
+    from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryError, ConfigEntryNotReady
 
 from .const import (
@@ -30,8 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass: HomeAssistant, entry: S3ConfigEntry) -> bool:
     """Set up S3 from a config entry."""
-
-    data = cast(dict, entry.data)
+    data = cast("dict", entry.data)
     try:
         session = AioSession()
         # pylint: disable-next=unnecessary-dunder-call
@@ -75,7 +78,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: S3ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: S3ConfigEntry) -> bool:
+async def async_unload_entry(_hass: HomeAssistant, entry: S3ConfigEntry) -> bool:
     """Unload a config entry."""
     client = entry.runtime_data
     await client.__aexit__(None, None, None)
